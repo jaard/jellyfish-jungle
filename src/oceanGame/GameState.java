@@ -31,5 +31,9 @@ public class GameState {
 			running = true;
 		}
 	}
+	
+	public void updateTimeRunning(int fps){
+		timeRunning += 1000/fps;
+	}
 
 }

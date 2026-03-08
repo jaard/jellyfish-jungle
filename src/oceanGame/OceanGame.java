@@ -1,31 +1,45 @@
 package oceanGame;
 
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.Window;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class OceanGame {
 	
-	JFrame f;
-	
+	JFrame game;
 
 	public OceanGame(){
 		
-		f = new JFrame();
+		
+		game = new JFrame();
 		Ocean ocean = new Ocean();
-		f.add(ocean);
-		f.setLocation(250,150);
-		f.setVisible(true);
-		f.setResizable(false);
-		f.setBackground(Color.BLUE);
-		//f.setLayout(new GridLayout(1,1));
-		f.setSize(800,600);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.add(ocean);
+		game.setLocation(250,150);
+		centreWindow(game);
+		game.setResizable(false);
+		game.pack();
+		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.setVisible(true);
 		
 		
 	}
+	
+	// Method to put the game window in the middle of the screen
+	public static void centreWindow(Window frame) {
+	    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - 800) / 2);
+	    int y = (int) ((dimension.getHeight() - 600) / 2);
+	    frame.setLocation(x, y);
+	}
+	
+//	public JLabel createLoadScreen() {
+//        JLabel loadScreen = new javax.swing.JLabel();
+//        loadScreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/ghost_left.png")));
+//        return loadScreen;
+//    }
+	
 	public static void main(String[] args) {
 		
 		new OceanGame();

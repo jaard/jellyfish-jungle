@@ -9,16 +9,18 @@ public class EnemyManager {
 	int enemyTypes = 2;
 	private int timeSinceEnemy = 0;
 	private int timeToEnemy = 700;
-	double enemyProbability = 0.3;
-	double probabilityType1 = 0.8;	// The sum of the probabilities 
-	double probabilityType2 = 0.2;	//   of the enemies should be 1
-	double speedType1 = 100;
-	double speedType2 = 180;
+	double enemyProbability = 0.4;
+	double probabilityType1 = 0.4;	// The sum of the probabilities 
+	double probabilityType2 = 0.6;	//   of the enemies should be 1
+	int speed;
+	double speedType1 = speed + 150;
+	double speedType2 = speed + 70;
 	double speedVariance = 100;
 	
 	
-	public EnemyManager(int width, int height) {
+	public EnemyManager(int width, int height, int speed) {
 		
+		this.speed = speed;
 		this.width = width;
 		this.height = height;
 		lowerBoundary = 500;
@@ -27,9 +29,9 @@ public class EnemyManager {
 	}
 	
 	// Add new enemies and delete those off screen
-	public ArrayList<Enemy> update(ArrayList<Enemy> enemies, int timePassed) {
+	public ArrayList<Enemy> update(ArrayList<Enemy> enemies, int fps) {
 		
-		timeSinceEnemy += timePassed;
+		timeSinceEnemy += 1000 / fps;
 		if(timeSinceEnemy > timeToEnemy){
 			
 			if(Math.random() < enemyProbability){
@@ -93,6 +95,10 @@ public class EnemyManager {
 			enemies.remove(enemy);
 		}
 		return enemies;
+	}
+	
+	public void setSpeed(int speed){
+		this.speed = speed;
 	}
 
 }

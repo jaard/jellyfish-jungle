@@ -47,7 +47,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	// Target frames per second that the game should run at
 	int fps = 60;
 	// Initial speed of the background
-	int backgroundSpeed = 30;
+	int speed = 30;
 
 	public Ocean() {
 
@@ -63,13 +63,13 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		font2 = new Font("Arial", Font.PLAIN, 20);
 
 		gs = new GameState();
-		em = new EnemyManager(800, 600);
+		em = new EnemyManager(800, 600, speed);
 
 		enemies = new ArrayList<Enemy>();
 		hero = new Character();
 		hero.setPosition(10, 200);
-		bg = new Background(backgroundSpeed);
-		bg2 = new Background(backgroundSpeed);
+		bg = new Background(speed);
+		bg2 = new Background(speed);
 
 		em.setTimeToEnemy(500);
 		enemies = em.addEnemy(enemies);
@@ -159,7 +159,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 		if (gs.isRunning()) {
 
-			enemies = em.update(enemies, 1000 / fps);
+			enemies = em.update(enemies, fps);
 			enemies = em.move(enemies, fps);
 			hero.positionUpdate();
 
@@ -167,6 +167,8 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			bg2.move(fps);
 			collisionDetection();
 			backgroundloop();
+			
+			gs.updateTimeRunning(fps);
 
 		}
 
@@ -213,8 +215,18 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	}
 
 	public void collisionDetection() {
+		
+		ArrayList<Enemy> collidedEnemies = new ArrayList<Enemy>();
 		for (Enemy enemy : enemies) {
+			
 			if (hero.intersects(enemy) == true) {
+				collidedEnemies.add(enemy);
+			}
+		}
+		for(Enemy enemy : collidedEnemies){
+			if(enemy.isEdible()){
+				enemies.remove(enemy);
+			}else {
 				hero.dies();
 			}
 		}
@@ -256,7 +268,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			e.printStackTrace();
 
 		}
-		System.out.println(hero.getX());
+		//System.out.println(hero.getX());
 
 	}
 	public void load() {
@@ -274,7 +286,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			e.printStackTrace();
 
 		}
-		System.out.println(hero.getX());
+		//System.out.println(hero.getX());
 		gs.setRunning(true);
 		
 	}
