@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,6 +25,7 @@ import javax.swing.JPanel;
 public class Ocean extends JPanel implements Runnable, KeyListener {
 
 	private int k;
+	private int mult = 1;
 	private int height = 600;
 	private int width = 800;
 	private int textposition = 150;
@@ -37,7 +39,8 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	ArrayList<Enemy> enemies;
 	Character hero;
 	String filenamestart = "src/resources/start.txt";
-	String filenamesave = "src/resources/save.txt";
+
+	String filenamesave = "/Users/Thore/javasave/save.txt";
 
 	// Writing on Screen
 	private Color titlecolor;
@@ -136,12 +139,20 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 			}
 
+		} else {
+			g2d.setFont(font2);
+			g2d.drawString("Level: " + gs.getLevel(), 700, 50);
+			g2d.drawString("Score: " + gs.getScore(), 580, 50);
+			g2d.drawString("Lifes: " + hero.getLife(), 460, 50);
 		}
+
 		if (hero.alive() == false & gs.isRunning() == true) {
 
 			g2d.setColor(titlecolor);
 			g2d.setFont(new Font("Arial", Font.CENTER_BASELINE, 70));
 			g2d.drawString("GAME OVER", 180, 250);
+			g2d.setFont(font);
+			g2d.drawString("Your Score: " + gs.getScore(), 180, 350);
 
 		}
 
@@ -166,10 +177,20 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 			bg.move(fps);
 			bg2.move(fps);
+			bg.setSpeed(speed);
+			bg2.setSpeed(speed);
 			collisionDetection();
 			backgroundloop();
-			
+
 			gs.updateTimeRunning(fps);
+
+			if (gs.getTimeRunning() > 6000 * mult) {
+				gs.levelUp();
+				mult += 1;
+				speed += 60;
+
+			}
+			
 
 		}
 
@@ -206,58 +227,52 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	// Makes the background a continuous loop
 	private void backgroundloop() {
 
-		if (bg2.getX() == 0) {
+		if (bg2.getX() <= 0) {
 			bg.setPosition(bg2.getX() + 1100, 0);
 		}
-		if (bg.getX() == 0) {
+		if (bg.getX() <= 0) {
 			bg2.setPosition(bg.getX() + 1100, 0);
 		}
 
 	}
 
 	public void collisionDetection() {
-		
+
 		ArrayList<Enemy> collidedEnemies = new ArrayList<Enemy>();
 		for (Enemy enemy : enemies) {
-			
+
 			if (hero.intersects(enemy) == true) {
 				collidedEnemies.add(enemy);
 			}
 		}
-		for(Enemy enemy : collidedEnemies){
-			if(enemy.isEdible()){
-				enemies.remove(enemy);
-			}else {
-				hero.dies();
+		for (Enemy enemy : collidedEnemies) {
+			if (hero.alive() == true) {
+				if (enemy.isEdible()) {
+					enemies.remove(enemy);
+					gs.incScore();
+				} else {
+					hero.decLife();
+					enemies.remove(enemy);
+					if(hero.getLife() == 0){
+						hero.dies();
+						
+					}
+				}
 			}
 		}
-
 	}
 
 	public void select() {
 		if (currentChoice == 0) {
 			// start
-			if (hero.alive() == true) {
-				gs.setRunning(true);
-
-			}
-			else{
-				try {
-					InputStream is = new FileInputStream(filenamestart);
-					ObjectInputStream ois = new ObjectInputStream(is);
-					hero = (Character) ois.readObject();
-					bg = (Background) ois.readObject();
-					bg2 = (Background) ois.readObject();
-					enemies = (ArrayList<Enemy>) ois.readObject();
-					ois.close();
-					
-
-				} catch (Exception e) {
-					e.printStackTrace();
-
-				}
-			}
+			
 			gs.setRunning(true);
+			gs.setScore(0);
+			gs.setTimeRunning(0);
+			gs.setLevel(1);
+			hero = new Character();
+			hero.setPosition(10, 200);
+			enemies.removeAll(enemies);
 		}
 		if (currentChoice == 1) {
 			load();
@@ -280,15 +295,17 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			oos.writeObject(bg);
 			oos.writeObject(bg2);
 			oos.writeObject(enemies);
+			oos.writeObject(gs);
 			oos.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 
 		}
-		//System.out.println(hero.getX());
+		// System.out.println(hero.getX());
 
 	}
+
 	public void load() {
 		try {
 			InputStream is = new FileInputStream(filenamesave);
@@ -297,16 +314,16 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			bg = (Background) ois.readObject();
 			bg2 = (Background) ois.readObject();
 			enemies = (ArrayList<Enemy>) ois.readObject();
+			gs = (GameState) ois.readObject();
 			ois.close();
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
-		//System.out.println(hero.getX());
+		// System.out.println(hero.getX());
 		gs.setRunning(true);
-		
+
 	}
 
 	public void keyTyped(KeyEvent key) {

@@ -100,5 +100,9 @@ public class EnemyManager {
 	public void setSpeed(int speed){
 		this.speed = speed;
 	}
+	public void incSpeed(int s){
+		speed += s;
+	}
+	
 
 }

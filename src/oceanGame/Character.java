@@ -9,6 +9,7 @@ public class Character extends MovingObjects implements  Serializable{
 
 	private boolean exists = true;
 	private int speed = 6;
+	private int life = 3;
 	
 	
 	
@@ -62,6 +63,18 @@ public class Character extends MovingObjects implements  Serializable{
  	}
     public int getSpeed(){
     	return speed;
+    }
+    public int getLife(){
+    	return life;
+    }
+    public void setLife(int l){
+    	life = l;
+    }
+    public void decLife(){
+    	life -= 1;
+    }
+    public void setExists(boolean e){
+    	exists = e;
     }
 
 
