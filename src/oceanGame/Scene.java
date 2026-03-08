@@ -1,32 +1,26 @@
 package oceanGame;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public class Scene {
+public class Scene implements Serializable{
 	
-	private Image sceneImage;
-	private int sceneDuration;
+	private ImageIcon image;
+	private long endTime;
 	
-	public Scene(String filename, int sceneDuration){
+	public Scene(ImageIcon i, long endTime){
 		
-		loadImage(filename);
-		this.sceneDuration = sceneDuration;
-		
+		this.image = i;
+		this.endTime = endTime;
 	}
 	
-	public void loadImage(String filename) {
-
-		sceneImage = new ImageIcon(getClass().getResource(filename)).getImage();
-
+	public ImageIcon getImage(){
+		return image;
 	}
 	
-	public Image getImage(){
-		return sceneImage;
-	}
-	
-	public int getDuration(){
-		return sceneDuration;
+	public long getEndTime(){
+		return endTime;
 	}
 }

@@ -98,11 +98,31 @@ public class EnemyManager {
 	}
 	
 	public void setSpeed(int speed){
+		
 		this.speed = speed;
-	}
-	public void incSpeed(int s){
-		speed += s;
+		this.speedType1 = speed + 150;
+		this.speedType2 = speed + 70;
 	}
 	
+	public ArrayList<Enemy> animate(ArrayList<Enemy> enemies, int fps){
+		
+		for(Enemy enemy : enemies){
+			
+			if(enemy.isAnimated()){
+			enemy.getAnimation().update(1000/fps);
+			enemy.updateCurrentImage();
+			}
+		}
+		return enemies;
+	}
+	
+	public ArrayList<Enemy> increaseEnemySpeed(ArrayList<Enemy> enemies, int increment){
+		
+		for(Enemy enemy : enemies){
+			double oldSpeed = enemy.getXVel();
+			enemy.setXVel(oldSpeed + increment);
+		}
+		return enemies;
+	}
 
 }

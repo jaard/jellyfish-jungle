@@ -14,6 +14,7 @@ public class Background extends MovingObjects implements  Serializable {
 		this.loadPicture("/resources/betaHintergrund.png");
 		width = sprite.getImage().getWidth(null);
 		height = sprite.getImage().getHeight(null);
+		currentImage = sprite;
 		
 	}
 	

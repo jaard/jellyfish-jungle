@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 public abstract class MovingObjects implements Serializable{
 
 	protected int x, y, dy, dx, width, height;
-	protected ImageIcon sprite;
+	protected ImageIcon sprite, currentImage;
 	protected double xVel, yVel; // Negative velocities in Pixels per second
 	protected double restX = 0, restY = 0;
 
@@ -21,7 +21,7 @@ public abstract class MovingObjects implements Serializable{
 
 	public Image getImage() {
 		
-		return sprite.getImage();
+		return currentImage.getImage();
 	}
 
 	// Moves the object according to its velocity

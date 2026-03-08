@@ -52,6 +52,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	int fps = 60;
 	// Initial speed of the background
 	int speed = 30;
+	int levelSpeedIncrement = 30;
 
 	public Ocean() {
 
@@ -173,6 +174,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 			enemies = em.update(enemies, fps);
 			enemies = em.move(enemies, fps);
+			enemies = em.animate(enemies, fps);
 			hero.positionUpdate();
 
 			bg.move(fps);
@@ -187,7 +189,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			if (gs.getTimeRunning() > 6000 * mult) {
 				gs.levelUp();
 				mult += 1;
-				speed += 60;
+				speed += levelSpeedIncrement;
+				em.setSpeed(speed);
+				enemies = em.increaseEnemySpeed(enemies, levelSpeedIncrement);
 
 			}
 			

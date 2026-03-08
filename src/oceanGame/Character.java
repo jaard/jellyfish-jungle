@@ -18,6 +18,7 @@ public class Character extends MovingObjects implements  Serializable{
  			this.loadPicture("/resources/ghost_right.png");
  			width = sprite.getImage().getWidth(null);
  			height = sprite.getImage().getHeight(null);
+ 			currentImage = sprite;
 
 	}
      
