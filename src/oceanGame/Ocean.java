@@ -6,8 +6,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -28,6 +36,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	EnemyManager em;
 	ArrayList<Enemy> enemies;
 	Character hero;
+	String filename = "test.txt";
 
 	// Writing on Screen
 	private Color titlecolor;
@@ -52,7 +61,6 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		titlefont = new Font("Georgia", Font.ITALIC, 70);
 		font = new Font("Arial", Font.PLAIN, 40);
 		font2 = new Font("Arial", Font.PLAIN, 20);
-		
 
 		gs = new GameState();
 		em = new EnemyManager(800, 600);
@@ -86,6 +94,16 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
+				RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
 		g2d.drawImage(bg.getImage(), bg.getX(), bg.getY(), null);
 		g2d.drawImage(bg2.getImage(), bg2.getX(), bg2.getY(), null);
@@ -104,7 +122,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			g2d.setColor(Color.BLACK);
 			g2d.drawString("press ESC for Menu", 280, 565);
 			g2d.setFont(font);
-			
+
 			for (int i = 0; i < options.length; i++) {
 				if (i == currentChoice) {
 					g2d.setColor(Color.BLACK);
@@ -116,7 +134,6 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 				g2d.drawString(options[i], 320, textposition + 70 + i * 50);
 
 			}
-			
 
 		}
 		if (hero.alive() == false & gs.isRunning() == true) {
@@ -150,7 +167,6 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			bg2.move(fps);
 			collisionDetection();
 			backgroundloop();
-			
 
 		}
 
@@ -207,22 +223,60 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 	public void select() {
 		if (currentChoice == 0) {
-			//start
+			// start
 			if (hero.alive() == true) {
 				gs.setRunning(true);
-				
+
 			}
 		}
 		if (currentChoice == 1) {
-			// Load
+			load();
 		}
 		if (currentChoice == 2) {
-			// Save
+			save();
 
 		}
 		if (currentChoice == 3) {
 			System.exit(0);
 		}
+	}
+
+	public void save() {
+
+		try {
+			OutputStream os = new FileOutputStream(filename);
+			ObjectOutputStream oos = new ObjectOutputStream(os);
+			oos.writeObject(hero);
+			oos.writeObject(bg);
+			oos.writeObject(bg2);
+			oos.writeObject(enemies);
+			oos.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
+		System.out.println(hero.getX());
+
+	}
+	public void load() {
+		try {
+			InputStream is = new FileInputStream(filename);
+			ObjectInputStream ois = new ObjectInputStream(is);
+			hero = (Character) ois.readObject();
+			bg = (Background) ois.readObject();
+			bg2 = (Background) ois.readObject();
+			enemies = (ArrayList<Enemy>) ois.readObject();
+			ois.close();
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		System.out.println(hero.getX());
+		gs.setRunning(true);
+		
 	}
 
 	public void keyTyped(KeyEvent key) {

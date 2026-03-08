@@ -1,9 +1,12 @@
 package oceanGame;
 
+import java.io.Serializable;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Character extends MovingObjects{
+public class Character extends MovingObjects implements  Serializable{
+
 	private boolean exists = true;
 	private int speed = 6;
 	
@@ -12,15 +15,15 @@ public class Character extends MovingObjects{
      public Character() {
 		
  			this.loadPicture("/resources/ghost_right.png");
- 			width = sprite.getWidth(null);
- 			height = sprite.getHeight(null);
+ 			width = sprite.getImage().getWidth(null);
+ 			height = sprite.getImage().getHeight(null);
 
 	}
      
      public void dies(){
     	 exists = false;
     	 try {
- 			sprite = new ImageIcon(getClass().getResource("/resources/ghost_orange.png")).getImage();
+ 			sprite = new ImageIcon(getClass().getResource("/resources/ghost_orange.png"));
 
  		} catch (Exception e) {
  			e.printStackTrace();

@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 public class EnemyManager {
 	
-	private int timeToEnemy, timeSinceEnemy;
 	int width, height, lowerBoundary;
 	int maxEnemyHeight = 100;
 	int enemyTypes = 2;
+	private int timeSinceEnemy = 0;
+	private int timeToEnemy = 700;
 	double enemyProbability = 0.3;
 	double probabilityType1 = 0.8;	// The sum of the probabilities 
 	double probabilityType2 = 0.2;	//   of the enemies should be 1
 	double speedType1 = 100;
 	double speedType2 = 180;
+	double speedVariance = 100;
 	
 	
 	public EnemyManager(int width, int height) {
@@ -21,8 +23,7 @@ public class EnemyManager {
 		this.height = height;
 		lowerBoundary = 500;
 		//lowerBoundary = height - maxEnemyHeight;
-		timeToEnemy = 250000;
-		timeSinceEnemy = 0;
+		
 	}
 	
 	// Add new enemies and delete those off screen
@@ -66,9 +67,9 @@ public class EnemyManager {
 			// In this block an enemy type is chosen randomly based on the probabilities
 			double randomNumber = Math.random();
 			if(randomNumber < probabilityType1){
-				enemies.add(new Enemy(1,width,spawnPoint,speedType1));
+				enemies.add(new Enemy(1,width,spawnPoint,speedType1 - speedVariance*0.5 + Math.random()*speedVariance));
 			}else if(randomNumber >= probabilityType1 && randomNumber < probabilityType1 + probabilityType2){
-				enemies.add(new Enemy(2,width,spawnPoint,speedType2));
+				enemies.add(new Enemy(2,width,spawnPoint,speedType2 - speedVariance*0.5 + Math.random()*speedVariance));
 			}
 			return enemies;
 		

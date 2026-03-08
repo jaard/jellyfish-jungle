@@ -2,24 +2,26 @@ package oceanGame;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-public abstract class MovingObjects {
+public abstract class MovingObjects implements Serializable{
 
 	protected int x, y, dy, dx, width, height;
-	protected Image sprite;
+	protected ImageIcon sprite;
 	protected double xVel, yVel; // Negative velocities in Pixels per second
 	protected double restX = 0, restY = 0;
 
 	public void loadPicture(String name) {
 
-		sprite = new ImageIcon(getClass().getResource(name)).getImage();
+		sprite = new ImageIcon(getClass().getResource(name));
 
 	}
 
 	public Image getImage() {
-		return sprite;
+		
+		return sprite.getImage();
 	}
 
 	// Moves the object according to its velocity

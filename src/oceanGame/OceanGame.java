@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 public class OceanGame {
 	
 	JFrame f;
+	
 
 	public OceanGame(){
 		
