@@ -23,8 +23,9 @@ public class Character extends MovingObjects implements Serializable {
 	
 	/**
 	 * The movement speed and life
+	 * speed of the Character is in pixels per second
 	 */
-	private int speed = 6;
+	private int speed = 360;
 	private int life = 3;
 	
 	/**
@@ -40,13 +41,14 @@ public class Character extends MovingObjects implements Serializable {
 	 */
 	
 	public Character() {
-
-		this.loadPicture("/resources/seal_swimming.png");
+		
+		loadPicture("/resources/seal_swimming.png");
+		setPosition(60, 200);
 		width = sprite.getImage().getWidth(null);
 		height = sprite.getImage().getHeight(null);
 		currentImage = sprite;
 		loadAnimations();
-
+		
 	}
 	
 	/**
@@ -162,8 +164,8 @@ public class Character extends MovingObjects implements Serializable {
 	public void dies() {
 		exists = false;
 		
-		this.dy = 3;
-		this.dx = 0;
+		yVel = -180;
+		xVel = 0;
 
 	}
 	/**
@@ -178,25 +180,54 @@ public class Character extends MovingObjects implements Serializable {
 			return false;
 		}
 	}
+//	/**
+//	 * Method to update position of the Character
+//	 */
+//
+//	public void positionUpdate() {
+//
+//		if (x < 0) {
+//			x = 0;
+//		}
+//		if (y < 0) {
+//			y = 0;
+//		}
+//		if (y + (height) > 600 & exists == true) {
+//			y = 600 - (height);
+//		}
+//
+//		else {
+//			this.x += dx;
+//			this.y += dy;
+//		}
+//
+//	}
+//	
 	/**
-	 * Method to update position of the Character
+	 * Method to move the Character according to its velocity but keep it
+	 * inside the boundaries of the screen
+	 * @param fps
 	 */
-
-	public void positionUpdate() {
-
-		if (x < 0) {
+	public void move(int fps) {
+		
+		restX = restX + ((xVel / fps) % 1);
+		x -= (int) (xVel / fps);
+		x -= (int) restX;
+		restX = restX % 1;
+		
+		restY = restY + ((yVel / fps) % 1);
+		y -= (int) (yVel / fps);
+		y -= (int) restY;
+		restY = restY % 1;
+		
+		if(x < 0){
 			x = 0;
-		}
-		if (y < 0) {
+		}else if(x + getWidth() > 800){
+			x = 800 - getWidth();
+		}else if(y < 0){
 			y = 0;
-		}
-		if (y + (height) > 600 & exists == true) {
-			y = 600 - (height);
-		}
-
-		else {
-			this.x += dx;
-			this.y += dy;
+		}else if(y + getHeight() > 600){
+			y = 600 - getHeight();
 		}
 
 	}

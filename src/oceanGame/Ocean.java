@@ -35,10 +35,6 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	 */
 	private int k;
 	/**
-	 * Multiplicator for level up
-	 */
-	private int mult = 1;
-	/**
 	 * height of the ocean
 	 */
 	private int height = 600;
@@ -87,6 +83,10 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	 */
 	Character hero;
 	/**
+	 * Bubble that can appear around the main Character
+	 */
+	Bubble bubble;
+	/**
 	 * Path were the save method writes 
 	 */
     String filenamesave = "src/resources/save.txt";
@@ -112,10 +112,6 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	 * Target frames per second that the game should run at
 	 */
 	int fps = 60;
-	/**
-	 * The speed by which the backgroundspeed is increased by a level up 
-	 */
-	int levelSpeedIncrement = 30;
 
 	/**
 	 * Constructor of the Ocean class
@@ -139,12 +135,12 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 		enemies = new ArrayList<Enemy>();
 		hero = new Character();
-		hero.setPosition(60, 200);
+		bubble = new Bubble(hero);
 		bg = new Background(gs.getBackgroundspeed());
 		bg2 = new Background(gs.getBackgroundspeed());
 
-		em.setTimeToEnemy(500);
-		enemies = em.addEnemy(enemies);
+		//em.setTimeToEnemy(500);
+		//enemies = em.addEnemy(enemies);
 		gs.setRunning(false);
 
 	}
@@ -185,7 +181,12 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		for (Enemy enemy : enemies) {
 			g2d.drawImage(enemy.getImage(), enemy.getX(), enemy.getY(), null);
 		}
+		
 		g2d.drawImage(hero.getImage(), hero.getX(), hero.getY(), null);
+		
+		if(bubble.isActive()){
+			g2d.drawImage(bubble.getImage(), bubble.getX(), bubble.getY(), null);
+		}
 
 		if (gs.isRunning() == false) {
 
@@ -248,9 +249,11 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			enemies = em.update(enemies, fps);
 			enemies = em.move(enemies, fps);
 			enemies = em.animate(enemies, fps);
-			hero.positionUpdate();
+			hero.move(fps);
 			hero.animationUpdate(fps);
-
+			bubble.move(hero);
+			bubble.update(fps);
+			
 			bg.move(fps);
 			bg2.move(fps);
 			bg.setSpeed(gs.getBackgroundspeed());
@@ -259,15 +262,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			backgroundloop();
 
 			gs.updateTimeRunning(fps);
-
-			if (gs.getTimeRunning() > 6000 * mult & hero.alive()) {
-				gs.levelUp();
-				mult += 1;
-				gs.setBackgroundspeed(gs.getBackgroundspeed() + levelSpeedIncrement);
-				em.setSpeed(gs.getBackgroundspeed());
-				enemies = em.increaseEnemySpeed(enemies, levelSpeedIncrement);
-
-			}
+			enemies = gs.update(hero, enemies, em, fps);
 			
 
 		}
@@ -336,24 +331,27 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		}
 		for (Enemy enemy : collidedEnemies) {
 			if (hero.alive() == true) {
-				if (enemy.isEdible()) {
-					enemies.remove(enemy);
-					gs.incScore();
-					if(hero.getDx() >= 0){
-						hero.eats();
-					}
-					
-				} else if (enemy.isCollidable()) {
-					hero.decLife();
-					enemy.setCollidable(false);
-					if(hero.getLife() == 0){
-						hero.dies();
-						gs.setBackgroundspeed(0);
+				if(bubble.isActive() == false){
+					if (enemy.isEdible()) {
+						enemies.remove(enemy);
+						gs.incScore();
+						if(hero.getxVel() <= 0){
+							hero.eats();
+						}
 						
-					}
-					if(hero.alive()){
-						hero.blinks();
-					}
+					} else if (enemy.isCollidable()) {
+						hero.decLife();
+						enemy.setCollidable(false);
+						if(hero.getLife() == 0){
+							hero.dies();
+							bubble.setActive(false);
+							gs.setBackgroundspeed(0);
+							
+						}
+						if(hero.alive()){
+							hero.blinks();
+						}
+					}	
 				}
 				
 			}
@@ -371,15 +369,11 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	public void select() {
 		if (currentChoice == 0) {
 			
-			
-			
 			gs = new GameState();
-			
 			em = new EnemyManager(800, 600, gs.getBackgroundspeed());
 
 			enemies = new ArrayList<Enemy>();
 			hero = new Character();
-			hero.setPosition(60, 200);
 			bg = new Background(gs.getBackgroundspeed());
 			bg2 = new Background(gs.getBackgroundspeed());
 			gs.setRunning(true);
@@ -462,19 +456,28 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			if (hero.alive() == true) {
 
 				if (k == KeyEvent.VK_UP) {
-					hero.setdy(-hero.getSpeed());
+					hero.setyVel(hero.getSpeed());
 				}
 				if (k == KeyEvent.VK_DOWN) {
-					hero.setdy(hero.getSpeed());
+					hero.setyVel(-hero.getSpeed());
 				}
 				if (k == KeyEvent.VK_S) {
 					hero.dies();
 				}
 				if (k == KeyEvent.VK_LEFT) {
-					hero.setdx(-hero.getSpeed());
+					hero.setxVel(hero.getSpeed());
 				}
 				if (k == KeyEvent.VK_RIGHT) {
-					hero.setdx(hero.getSpeed());
+					hero.setxVel(-hero.getSpeed());
+				}
+				
+				if (k == KeyEvent.VK_SPACE) {
+					if(bubble.isActive()){
+						bubble.setActive(false);
+					}else{
+						bubble.setActive(true);
+					}
+					
 				}
 			}
 		}
@@ -511,16 +514,16 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		if (hero.alive() == true) {
 			k = key.getKeyCode();
 			if (k == KeyEvent.VK_UP) {
-				hero.setdy(0);
+				hero.setyVel(0);
 			}
 			if (k == KeyEvent.VK_DOWN) {
-				hero.setdy(0);
+				hero.setyVel(0);
 			}
 			if (k == KeyEvent.VK_LEFT) {
-				hero.setdx(0);
+				hero.setxVel(0);
 			}
 			if (k == KeyEvent.VK_RIGHT) {
-				hero.setdx(0);
+				hero.setxVel(0);
 			}
 		}
 	}

@@ -67,33 +67,38 @@ public abstract class MovingObjects implements Serializable{
 	 * @param fps
 	 */
 	public void move(int fps) {
-
+		
 		restX = restX + ((xVel / fps) % 1);
 		x -= (int) (xVel / fps);
 		x -= (int) restX;
 		restX = restX % 1;
+		
+		restY = restY + ((yVel / fps) % 1);
+		y -= (int) (yVel / fps);
+		y -= (int) restY;
+		restY = restY % 1;
 
 	}
 
-	/**
-	 * Setter for delta - x
-	 * @param dx
-	 */
-
-	public void setdx(int dx) {
-		this.dx = dx;
-
-	}
-	
-	/**
-	 * Setter for delta - y
-	 * @param dy
-	 */
-
-	public void setdy(int dy) {
-		this.dy = dy;
-
-	}
+//	/**
+//	 * Setter for delta - x
+//	 * @param dx
+//	 */
+//
+//	public void setdx(int dx) {
+//		this.dx = dx;
+//
+//	}
+//	
+//	/**
+//	 * Setter for delta - y
+//	 * @param dy
+//	 */
+//
+//	public void setdy(int dy) {
+//		this.dy = dy;
+//
+//	}
 	
 	/**
 	 * Method to set the position of the object
@@ -157,41 +162,41 @@ public abstract class MovingObjects implements Serializable{
 		return width;
 	}
 	
-	/**
-	 * Getter for delta - y
-	 * @return dy
-	 */
-	
-	public int getDy() {
-		return dy;
-	}
-	
-	/**
-	 * Setter for delta - y
-	 * @param dy
-	 */
-
-	public void setDy(int dy) {
-		this.dy = dy;
-	}
-	
-	/**
-	 * Getter for delta - x
-	 * @return dx
-	 */
-
-	public int getDx() {
-		return dx;
-	}
-	
-	/**
-	 * Setter for delta - x
-	 * @param dx
-	 */
-
-	public void setDx(int dx) {
-		this.dx = dx;
-	}
+//	/**
+//	 * Getter for delta - y
+//	 * @return dy
+//	 */
+//	
+//	public int getDy() {
+//		return dy;
+//	}
+//	
+//	/**
+//	 * Setter for delta - y
+//	 * @param dy
+//	 */
+//
+//	public void setDy(int dy) {
+//		this.dy = dy;
+//	}
+//	
+//	/**
+//	 * Getter for delta - x
+//	 * @return dx
+//	 */
+//
+//	public int getDx() {
+//		return dx;
+//	}
+//	
+//	/**
+//	 * Setter for delta - x
+//	 * @param dx
+//	 */
+//
+//	public void setDx(int dx) {
+//		this.dx = dx;
+//	}
 
 	/**
 	 * Method that checks if one MovingObject is intersecting with another
@@ -214,6 +219,26 @@ public abstract class MovingObjects implements Serializable{
 
 	public Rectangle getRectangle() {
 		return new Rectangle(this.x, this.y, this.width, this.height);
+	}
+	
+	/**
+	 * Getter/Setter methods for the velocities
+	 * @return xVel, yVel current velocities in x/y - direction
+	 */
+	public double getxVel() {
+		return xVel;
+	}
+
+	public void setxVel(double xVel) {
+		this.xVel = xVel;
+	}
+
+	public double getyVel() {
+		return yVel;
+	}
+
+	public void setyVel(double yVel) {
+		this.yVel = yVel;
 	}
 
 }

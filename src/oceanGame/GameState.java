@@ -1,6 +1,7 @@
 package oceanGame;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Class that controls the state of the game implements Serializable
@@ -18,6 +19,15 @@ public class GameState implements Serializable {
 	 * time it takes till the next enemy is created
 	 */
 	private int level, score, backgroundspeed;
+	
+	/**
+	 * The speed by which the backgroundspeed is increased by a level up 
+	 */
+	private int levelSpeedIncrement;
+	/**
+	 * Multiplicator for level up
+	 */
+	private int multiplier = 1;
 
 	/**
 	 * boolean that controls if the game is running
@@ -37,8 +47,22 @@ public class GameState implements Serializable {
 
 		running = true;
 		level = 1;
+		multiplier = 1;
 		backgroundspeed = 30;
+		levelSpeedIncrement = 15;
 
+	}
+	
+	public ArrayList<Enemy> update(Character hero, ArrayList<Enemy> enemies, EnemyManager em, int fps){
+		
+		if (this.getTimeRunning() > 6000 * multiplier & hero.alive()) {
+			this.levelUp();
+			multiplier += 1;
+			this.setBackgroundspeed(this.getBackgroundspeed() + levelSpeedIncrement);
+			em.setSpeed(this.getBackgroundspeed());
+			enemies = em.increaseEnemySpeed(enemies, levelSpeedIncrement);
+		}
+		return enemies;
 	}
 
 	/**
