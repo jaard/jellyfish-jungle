@@ -1,8 +1,9 @@
 package oceanGame;
 
+import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.io.Serializable;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -105,6 +106,24 @@ public class Character extends MovingObjects implements Serializable {
 		}
 
 	}
+	
+	public boolean intersects(MovingObjects other) {
+		Polygon p1 = getPolygon();
+		Rectangle r2 = other.getRectangle();
+		return p1.intersects(r2);
+	}
+	
+	public Polygon getPolygon(){
+		
+		int x = this.x;
+		int y = this.y;
+		int[] xPoints = {x + 90,x + 164,x + 90,x + 0};
+		int[] yPoints = {y + 0,y + 60,y + 120,y + 90};
+		
+		return new Polygon(xPoints,yPoints,4);
+	}
+	
+	
 	/**
 	 * Method for the Character to eat enemies
 	 * starts an animation
