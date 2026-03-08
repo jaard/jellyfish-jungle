@@ -16,6 +16,10 @@ public class GameState {
 		level += 1;
 	}
 	
+	public void setRunning(boolean r){
+		running = r;
+		
+	}
 	public boolean isRunning(){
 		return running;
 	}

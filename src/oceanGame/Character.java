@@ -5,7 +5,8 @@ import javax.swing.ImageIcon;
 
 public class Character extends MovingObjects{
 	private boolean exists = true;
-	private int[][] bounders;
+	private int speed = 6;
+	
 	
 	
      public Character() {
@@ -26,6 +27,7 @@ public class Character extends MovingObjects{
 
  		}
     	this.dy= 3; 
+    	this.dx= 0;
     	 
      }
      
@@ -37,6 +39,27 @@ public class Character extends MovingObjects{
     		 return false;
     	 }
      }
+     public void positionUpdate() {
+
+ 		if (x < 0) {
+ 			x = 0;
+ 		}
+ 		if(y < 0){
+ 			y = 0;
+ 		}
+ 		if(y + (height+ 20) > 600 & exists == true){
+ 			y= 600 - (height + 20) ;
+ 		}
+ 		
+ 		else {
+ 			this.x += dx;
+ 			this.y += dy;
+ 		}
+
+ 	}
+    public int getSpeed(){
+    	return speed;
+    }
 
 
 }

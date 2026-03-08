@@ -8,7 +8,7 @@ public class EnemyManager {
 	int width, height, lowerBoundary;
 	int maxEnemyHeight = 100;
 	int enemyTypes = 2;
-	double enemyProbability = 0.9;
+	double enemyProbability = 0.3;
 	double probabilityType1 = 0.8;	// The sum of the probabilities 
 	double probabilityType2 = 0.2;	//   of the enemies should be 1
 	double speedType1 = 100;
@@ -21,7 +21,7 @@ public class EnemyManager {
 		this.height = height;
 		lowerBoundary = 500;
 		//lowerBoundary = height - maxEnemyHeight;
-		timeToEnemy = 5000;
+		timeToEnemy = 250000;
 		timeSinceEnemy = 0;
 	}
 	
