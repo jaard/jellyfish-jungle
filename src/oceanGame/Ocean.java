@@ -28,7 +28,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	private int mult = 1;
 	private int height = 600;
 	private int width = 800;
-	private int textposition = 150;
+	private int textposition = 130;
 	private int currentChoice = 0;
 	private String[] options = { "Start", "Load", "Save", "Quit" };
 	Background bg;
@@ -59,7 +59,6 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		super();
 		setPreferredSize(new Dimension(width, height));
 		setFocusable(true);
-		// this.setBackground(Color.BLUE);
 		this.setDoubleBuffered(true);
 
 		titlecolor = new Color(0, 0, 0);
@@ -72,7 +71,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 		enemies = new ArrayList<Enemy>();
 		hero = new Character();
-		hero.setPosition(10, 200);
+		hero.setPosition(60, 200);
 		bg = new Background(speed);
 		bg2 = new Background(speed);
 
@@ -122,7 +121,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 			g2d.setColor(titlecolor);
 			g2d.setFont(titlefont);
-			g2d.drawString("FISH ATTACK", 150, textposition);
+			g2d.drawString("JELLYFISH JUNGLE", 60, textposition);
 			g2d.setFont(font2);
 			g2d.setColor(Color.BLACK);
 			g2d.drawString("press ESC for Menu", 280, 565);
@@ -134,9 +133,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 				} else {
 
-					g2d.setColor(Color.RED);
+					g2d.setColor(Color.WHITE);
 				}
-				g2d.drawString(options[i], 320, textposition + 70 + i * 50);
+				g2d.drawString(options[i], 320, textposition + 120 + i * 50);
 
 			}
 
@@ -176,6 +175,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			enemies = em.move(enemies, fps);
 			enemies = em.animate(enemies, fps);
 			hero.positionUpdate();
+			hero.animationUpdate(fps);
 
 			bg.move(fps);
 			bg2.move(fps);
@@ -186,7 +186,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 			gs.updateTimeRunning(fps);
 
-			if (gs.getTimeRunning() > 6000 * mult) {
+			if (gs.getTimeRunning() > 6000 * mult & hero.alive()) {
 				gs.levelUp();
 				mult += 1;
 				speed += levelSpeedIncrement;
@@ -232,10 +232,10 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	private void backgroundloop() {
 
 		if (bg2.getX() <= 0) {
-			bg.setPosition(bg2.getX() + 1100, 0);
+			bg.setPosition(bg2.getX() + bg.getImage().getWidth(null) - 1, 0);
 		}
 		if (bg.getX() <= 0) {
-			bg2.setPosition(bg.getX() + 1100, 0);
+			bg2.setPosition(bg.getX() + bg2.getImage().getWidth(null) - 1, 0);
 		}
 
 	}
@@ -243,10 +243,13 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	public void collisionDetection() {
 
 		ArrayList<Enemy> collidedEnemies = new ArrayList<Enemy>();
+		ArrayList<Enemy> notCollidedEnemies = new ArrayList<Enemy>();
 		for (Enemy enemy : enemies) {
 
 			if (hero.intersects(enemy) == true) {
 				collidedEnemies.add(enemy);
+			}else{
+				notCollidedEnemies.add(enemy);
 			}
 		}
 		for (Enemy enemy : collidedEnemies) {
@@ -254,29 +257,49 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 				if (enemy.isEdible()) {
 					enemies.remove(enemy);
 					gs.incScore();
-				} else {
+					if(hero.getDx() >= 0){
+						hero.eats();
+					}
+					
+				} else if (enemy.isCollidable()) {
 					hero.decLife();
-					enemies.remove(enemy);
+					enemy.setCollidable(false);
 					if(hero.getLife() == 0){
 						hero.dies();
+						speed = 0;
+						bg.setSpeed(speed);
+						bg2.setSpeed(speed);
 						
 					}
+					if(hero.alive()){
+						hero.blinks();
+					}
 				}
+				
 			}
 		}
+		for(Enemy enemy : notCollidedEnemies){
+			enemy.setCollidable(true);
+			
+		}
+		
 	}
 
 	public void select() {
 		if (currentChoice == 0) {
 			// start
 			
-			gs.setRunning(true);
-			gs.setScore(0);
-			gs.setTimeRunning(0);
-			gs.setLevel(1);
+			speed = 30;
+			gs = new GameState();
+			em = new EnemyManager(800, 600, speed);
+
+			enemies = new ArrayList<Enemy>();
 			hero = new Character();
-			hero.setPosition(10, 200);
-			enemies.removeAll(enemies);
+			hero.setPosition(60, 200);
+			bg = new Background(speed);
+			bg2 = new Background(speed);
+			gs.setRunning(true);
+			
 		}
 		if (currentChoice == 1) {
 			load();

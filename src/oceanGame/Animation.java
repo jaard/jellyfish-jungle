@@ -10,6 +10,7 @@ public class Animation implements Serializable{
 	
 	private ArrayList<Scene> scenes;
 	private int sceneIndex;
+	private int numberOfScenes;
 	private long movieTime;
 	private long totalTime;
 	
@@ -18,6 +19,7 @@ public class Animation implements Serializable{
 		
 		scenes = new ArrayList<Scene>();
 		totalTime = 0;
+		numberOfScenes = 0;
 		start();
 		
 	}
@@ -26,6 +28,7 @@ public class Animation implements Serializable{
 		
 		totalTime += duration;
 		scenes.add(new Scene(i, totalTime));
+		numberOfScenes++;
 		
 	}
 	
@@ -64,6 +67,15 @@ public class Animation implements Serializable{
 	public Scene getScene(int sceneIndex){
 		
 		return (Scene) scenes.get(sceneIndex);
+	}
+
+	public int getNumberOfScenes() {
+		
+		return numberOfScenes;
+	}
+
+	public int getSceneIndex() {
+		return sceneIndex;
 	}
 	
 }
