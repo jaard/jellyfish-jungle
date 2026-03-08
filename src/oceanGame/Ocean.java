@@ -36,7 +36,8 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	EnemyManager em;
 	ArrayList<Enemy> enemies;
 	Character hero;
-	String filename = "test.txt";
+	String filenamestart = "src/resources/start.txt";
+	String filenamesave = "src/resources/save.txt";
 
 	// Writing on Screen
 	private Color titlecolor;
@@ -240,6 +241,23 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 				gs.setRunning(true);
 
 			}
+			else{
+				try {
+					InputStream is = new FileInputStream(filenamestart);
+					ObjectInputStream ois = new ObjectInputStream(is);
+					hero = (Character) ois.readObject();
+					bg = (Background) ois.readObject();
+					bg2 = (Background) ois.readObject();
+					enemies = (ArrayList<Enemy>) ois.readObject();
+					ois.close();
+					
+
+				} catch (Exception e) {
+					e.printStackTrace();
+
+				}
+			}
+			gs.setRunning(true);
 		}
 		if (currentChoice == 1) {
 			load();
@@ -256,7 +274,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	public void save() {
 
 		try {
-			OutputStream os = new FileOutputStream(filename);
+			OutputStream os = new FileOutputStream(filenamesave);
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			oos.writeObject(hero);
 			oos.writeObject(bg);
@@ -273,7 +291,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	}
 	public void load() {
 		try {
-			InputStream is = new FileInputStream(filename);
+			InputStream is = new FileInputStream(filenamesave);
 			ObjectInputStream ois = new ObjectInputStream(is);
 			hero = (Character) ois.readObject();
 			bg = (Background) ois.readObject();

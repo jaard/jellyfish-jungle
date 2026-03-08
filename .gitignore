@@ -3,3 +3,6 @@
 
 # Binary folder
 bin/
+
+# .txt files in resources folder
+src/resources/*.txt
