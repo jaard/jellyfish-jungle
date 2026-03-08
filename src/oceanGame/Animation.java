@@ -98,7 +98,7 @@ public class Animation implements Serializable{
 	
 	/**
 	 * Getter for the image of the Scene that is playing
-	 * @return
+	 * @return Image
 	 */
 	public ImageIcon getImage(){
 	
@@ -112,7 +112,7 @@ public class Animation implements Serializable{
 	/**
 	 * Getter for the Scene that is playing
 	 * @param sceneIndex
-	 * @return
+	 * @return Scene
 	 */
 	public Scene getScene(int sceneIndex){
 		
@@ -121,7 +121,7 @@ public class Animation implements Serializable{
 	
 	/**
 	 * Getter for the total number of Scenes
-	 * @return
+	 * @return numberOfScenes
 	 */
 	public int getNumberOfScenes() {
 		
@@ -130,7 +130,7 @@ public class Animation implements Serializable{
 	
 	/**
 	 * Getter for the index of the scene that is playing
-	 * @return
+	 * @return sceneIndex
 	 */
 	public int getSceneIndex() {
 		return sceneIndex;

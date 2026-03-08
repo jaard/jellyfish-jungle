@@ -35,7 +35,7 @@ public class Scene implements Serializable{
 	
 	/**
 	 * Getter for the Scenes image
-	 * @return
+	 * @return image
 	 */
 	public ImageIcon getImage(){
 		return image;
@@ -43,7 +43,7 @@ public class Scene implements Serializable{
 	
 	/**
 	 * Getter for the Scenes time at which it ends
-	 * @return
+	 * @return endTime
 	 */
 	public long getEndTime(){
 		return endTime;

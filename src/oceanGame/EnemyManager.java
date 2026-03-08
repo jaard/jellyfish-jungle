@@ -71,7 +71,7 @@ public class EnemyManager {
 	 * 
 	 * @param enemies
 	 * @param fps
-	 * @return
+	 * @return enemies
 	 */
 	public ArrayList<Enemy> update(ArrayList<Enemy> enemies, int fps) {
 		
@@ -92,7 +92,7 @@ public class EnemyManager {
 	 * 
 	 * @param enemies
 	 * @param fps
-	 * @return
+	 * @return enemies
 	 */
 	public ArrayList<Enemy> move(ArrayList<Enemy> enemies, int fps){
 		
@@ -118,7 +118,7 @@ public class EnemyManager {
 	 * The type is chosen based in the probabilities specified above
 	 * 
 	 * @param enemies
-	 * @return
+	 * @return enemies
 	 */
 	public ArrayList<Enemy> addEnemy(ArrayList<Enemy> enemies){
 		
@@ -136,7 +136,7 @@ public class EnemyManager {
 	/** Method to delete enemies that left the screen
 	 * 
 	 * @param enemies
-	 * @return
+	 * @return enemies
 	 */
 	public ArrayList<Enemy> deleteOffScreen(ArrayList<Enemy> enemies){
 		
@@ -171,7 +171,7 @@ public class EnemyManager {
 	 * Method to animate the enemies
 	 * @param enemies
 	 * @param fps
-	 * @return
+	 * @return enemies
 	 */
 	public ArrayList<Enemy> animate(ArrayList<Enemy> enemies, int fps){
 		
@@ -191,7 +191,7 @@ public class EnemyManager {
 	 * 
 	 * @param enemies
 	 * @param increment
-	 * @return
+	 * @return enemies
 	 */
 	public ArrayList<Enemy> increaseEnemySpeed(ArrayList<Enemy> enemies, int increment){
 		

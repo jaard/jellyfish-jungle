@@ -6,3 +6,7 @@ bin/
 
 # .txt files in resources folder
 src/resources/*.txt
+
+# Doc folder
+doc/
+

@@ -107,12 +107,24 @@ public class Character extends MovingObjects implements Serializable {
 
 	}
 	
+	/**
+	 * Method that checks if the Character MovingObject is intersecting with another
+	 * Overwrites the method in MovingObjects and uses a Polygon instead of a Rectangle
+	 * needed for collision detection
+	 * @param other
+	 * @return boolean if the objects are intersecting
+	 */
+	
 	public boolean intersects(MovingObjects other) {
 		Polygon p1 = getPolygon();
 		Rectangle r2 = other.getRectangle();
 		return p1.intersects(r2);
 	}
 	
+	/**
+	 * Method to create a Polygon for the Character that approximates its outline
+	 * @return Polygon
+	 */
 	public Polygon getPolygon(){
 		
 		int x = this.x;

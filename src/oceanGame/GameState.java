@@ -3,7 +3,7 @@ package oceanGame;
 import java.io.Serializable;
 
 /**
- * Class that controls the State of the Game implements Serializable
+ * Class that controls the state of the game implements Serializable
  * 
  * @author Thore
  * 

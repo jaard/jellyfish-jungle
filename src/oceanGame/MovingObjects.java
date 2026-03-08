@@ -108,7 +108,7 @@ public abstract class MovingObjects implements Serializable{
 
 	/**
 	 * Getter for the x - position
-	 * @return
+	 * @return x
 	 */
 	public int getX() {
 		return x;
@@ -116,7 +116,7 @@ public abstract class MovingObjects implements Serializable{
 
 	/**
 	 * Getter for y - position
-	 * @return
+	 * @return y
 	 */
 	
 	public int getY() {
@@ -141,7 +141,7 @@ public abstract class MovingObjects implements Serializable{
 
 	/**
 	 * Getter for height
-	 * @return
+	 * @return height
 	 */
 	
 	public int getHeight() {
@@ -150,7 +150,7 @@ public abstract class MovingObjects implements Serializable{
 
 	/**
 	 * Getter for width
-	 * @return
+	 * @return width
 	 */
 	
 	public int getWidth() {
@@ -159,7 +159,7 @@ public abstract class MovingObjects implements Serializable{
 	
 	/**
 	 * Getter for delta - y
-	 * @return
+	 * @return dy
 	 */
 	
 	public int getDy() {
@@ -177,7 +177,7 @@ public abstract class MovingObjects implements Serializable{
 	
 	/**
 	 * Getter for delta - x
-	 * @return
+	 * @return dx
 	 */
 
 	public int getDx() {
@@ -209,7 +209,7 @@ public abstract class MovingObjects implements Serializable{
 	
 	/**
 	 * Method to create a rectangle for an MovingObject, according to its height, width and position
-	 * @return
+	 * @return Rectangle
 	 */
 
 	public Rectangle getRectangle() {
