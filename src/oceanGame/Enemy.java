@@ -40,39 +40,59 @@ public class Enemy extends MovingObjects implements Serializable {
 			width = sprite.getImage().getWidth(null);
 			height = sprite.getImage().getHeight(null);
 			edible = true;
-			animated = false;
+			animated = true;
 		} else if (type == 2) {
 			this.loadPicture("/resources/ghost_orange.png");
 			width = sprite.getImage().getWidth(null);
 			height = sprite.getImage().getHeight(null);
 			edible = false;
-			animated = false;
+			animated = true;
 		}
 		this.x = x;
 		this.y = y;
 		currentImage = sprite;
 		if (isAnimated()) {
-			loadMoveAnimation(xVel);
+			loadMoveAnimation(xVel,type);
 		}
 
 	}
 
 	/**
-	 * Loads the the animation for the enemys movement
+	 * Loads the the animation for the enemys movement according to its type
 	 * 
 	 * @param xVel
 	 */
-	public void loadMoveAnimation(double xVel) {
-
-		// long duration1 = (long) Math.round(0.5*10000/xVel);
-		// long duration2 = (long) Math.round(5*10000/xVel);
-		moveAnimation = new Animation();
-		moveAnimation.addScene(
-				new ImageIcon(getClass().getResource(
-						"/resources/ghost_orange.png")), 140);
-		moveAnimation.addScene(
-				new ImageIcon(getClass().getResource(
-						"/resources/ghost_left.png")), 1300);
+	public void loadMoveAnimation(double xVel, int type) {
+		
+		if(type == 1){
+			long duration0 = (long) (Math.random()*500);
+			long duration1 = (long) Math.round(1.2*100000/xVel);
+			long duration2 = (long) Math.round(5*100000/xVel);
+			moveAnimation = new Animation();
+			moveAnimation.addScene(
+					new ImageIcon(getClass().getResource(
+							"/resources/jelly_blue_small.png")), duration0);
+			moveAnimation.addScene(
+					new ImageIcon(getClass().getResource(
+							"/resources/jelly_blue_large.png")), duration1);
+			moveAnimation.addScene(
+					new ImageIcon(getClass().getResource(
+							"/resources/jelly_blue_small.png")), duration1);
+		}else if(type == 2){
+			long duration0 = (long) (Math.random()*500);
+			long duration1 = (long) Math.round(1.2*100000/xVel);
+			long duration2 = (long) Math.round(5*100000/xVel);
+			moveAnimation = new Animation();
+			moveAnimation.addScene(
+					new ImageIcon(getClass().getResource(
+							"/resources/jelly_orange_small.png")), duration0);
+			moveAnimation.addScene(
+					new ImageIcon(getClass().getResource(
+							"/resources/jelly_orange_large.png")), duration1);
+			moveAnimation.addScene(
+					new ImageIcon(getClass().getResource(
+							"/resources/jelly_orange_small.png")), duration1);
+		}
 	}
 
 	/**

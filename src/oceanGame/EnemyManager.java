@@ -27,17 +27,17 @@ public class EnemyManager {
 	 * Time since the last enemy appeared and time between enemies
 	 */
 	private int timeSinceEnemy = 0;
-	private int timeToEnemy = 700;
+	private int timeToEnemy = 500;
 	/**
 	 * Probability of an enemy showing up after the specified time
 	 */
-	double enemyProbability = 0.6;
+	double enemyProbability = 0.4;
 	/**
 	 * Probabilities of the different types of enemies
 	 * The probabilities should add up to 1
 	 */
-	double probabilityType1 = 0.4;
-	double probabilityType2 = 0.6;
+	double probabilityType1 = 0.6;
+	double probabilityType2 = 0.4;
 	/**
 	 * Speed of the background, speeds of the enemy types depending on 
 	 * the speed of the background and the variance in speed between
