@@ -5,9 +5,21 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Class that creates the ocean background
+ * extends Class MovingObjects implements Interface Serializable
+ * @author Thore
+ *
+ */
+
 public class Background extends MovingObjects implements  Serializable {
 
-	// Constructor for the background
+	/**
+	 * Constructor for the background
+	 * sets the movespeed
+	 * loads the background image
+	 * @param xVel
+	 */
 	public Background(double xVel) {
 		
 		this.xVel = xVel;
@@ -18,6 +30,11 @@ public class Background extends MovingObjects implements  Serializable {
 		currentImage = sprite;
 		
 	}
+	
+	/**
+	 * Setter for the velocity in x direction
+	 * @param speed
+	 */
 	
 	public void setSpeed(int speed){
 		this.xVel = speed;

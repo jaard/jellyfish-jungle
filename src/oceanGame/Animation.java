@@ -1,20 +1,48 @@
 package oceanGame;
 
-import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Class that can store a series of images and return them 
+ * depending on the time that has passed
+ * implements the interface Serializable
+ * 
+ * @author Thore, Jaard
+ *
+ */
+
 public class Animation implements Serializable{
 	
+	/**
+	 * ArrayList object to store the scenes
+	 */
 	private ArrayList<Scene> scenes;
+	/**
+	 * Index of the image that will be returned
+	 */
 	private int sceneIndex;
+	/**
+	 * Total number of scenes that the Animation contains
+	 */
 	private int numberOfScenes;
+	/**
+	 * Time that the current loop of the Animation has 
+	 * been playing in milliseconds
+	 */
 	private long movieTime;
+	/**
+	 * Time at which the Animation will be restarted from
+	 * the beginning
+	 */
 	private long totalTime;
 	
-	// Constructor for an empty Animation
+	/**
+	 * Contructor that creates an empty Animation without
+	 * any scenes
+	 */
 	public Animation(){
 		
 		scenes = new ArrayList<Scene>();
@@ -24,6 +52,12 @@ public class Animation implements Serializable{
 		
 	}
 	
+	/**
+	 * Method to add a new Scene to the Animation
+	 * 
+	 * @param i
+	 * @param duration
+	 */
 	public synchronized void addScene(ImageIcon i, long duration){
 		
 		totalTime += duration;
@@ -32,7 +66,9 @@ public class Animation implements Serializable{
 		
 	}
 	
-	// Start animation from beginning
+	/**
+	 * Method to start the animation from the beginning
+	 */
 	public synchronized void start(){
 		
 		movieTime = 0;
@@ -40,7 +76,12 @@ public class Animation implements Serializable{
 		
 	}
 	
-	public synchronized void update(long timePassed){
+	/**
+	 * Method to update the Animation according to the time that has passed
+	 * 
+	 * @param timePassed
+	 */
+	public void update(long timePassed){
 		
 		if(scenes.size() > 1){
 			movieTime += timePassed;
@@ -55,7 +96,11 @@ public class Animation implements Serializable{
 		
 	}
 	
-	public synchronized ImageIcon getImage(){
+	/**
+	 * Getter for the image of the Scene that is playing
+	 * @return
+	 */
+	public ImageIcon getImage(){
 	
 		if(scenes.size() == 0){
 			return null;
@@ -64,16 +109,29 @@ public class Animation implements Serializable{
 		}
 	}
 	
+	/**
+	 * Getter for the Scene that is playing
+	 * @param sceneIndex
+	 * @return
+	 */
 	public Scene getScene(int sceneIndex){
 		
 		return (Scene) scenes.get(sceneIndex);
 	}
-
+	
+	/**
+	 * Getter for the total number of Scenes
+	 * @return
+	 */
 	public int getNumberOfScenes() {
 		
 		return numberOfScenes;
 	}
-
+	
+	/**
+	 * Getter for the index of the scene that is playing
+	 * @return
+	 */
 	public int getSceneIndex() {
 		return sceneIndex;
 	}

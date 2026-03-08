@@ -17,7 +17,7 @@ public class GameState implements Serializable {
 	 * the Score the 
 	 * time it takes till the next enemy is created
 	 */
-	private int level, score, timeToEnemy;
+	private int level, score, backgroundspeed;
 
 	/**
 	 * boolean that controls if the game is running
@@ -37,6 +37,7 @@ public class GameState implements Serializable {
 
 		running = true;
 		level = 1;
+		backgroundspeed = 30;
 
 	}
 
@@ -153,6 +154,22 @@ public class GameState implements Serializable {
 
 	public void incScore() {
 		score += 1;
+	}
+	/**
+	 * Getter for backgroundspeed
+	 * @return backgroundspeed
+	 */
+
+	public int getBackgroundspeed() {
+		return backgroundspeed;
+	}
+	/**
+	 * Setter for backgroundspeeed
+	 * @param backgroundspeed
+	 */
+
+	public void setBackgroundspeed(int backgroundspeed) {
+		this.backgroundspeed = backgroundspeed;
 	}
 
 }

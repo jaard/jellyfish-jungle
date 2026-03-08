@@ -22,38 +22,105 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ * Ocean Class creates the ocean in the game with all objects
+ * extends JPanel and implements the interface Runnable and Keylistener
+ * @author Thore
+ *
+ */
 public class Ocean extends JPanel implements Runnable, KeyListener {
 
+	/**
+	 * Integer for the key code
+	 */
 	private int k;
+	/**
+	 * Multiplicator for level up
+	 */
 	private int mult = 1;
+	/**
+	 * height of the ocean
+	 */
 	private int height = 600;
+	/**
+	 * width of the ocean
+	 */
 	private int width = 800;
+	/**
+	 * Position of the Headline
+	 */
 	private int textposition = 130;
+	/**
+	 * Current choice in the menu
+	 */
 	private int currentChoice = 0;
+	/**
+	 * The options in the Menu
+	 */
 	private String[] options = { "Start", "Load", "Save", "Quit" };
+	/**
+	 * The game background
+	 */
 	Background bg;
+	/**
+	 * The second background (needed to loop the background) 
+	 */
 	Background bg2;
+	/**
+	 * Thread the game runs in
+	 */
 	Thread gameloop;
+	/**
+	 * Controls the state of the game
+	 */
 	GameState gs;
+	/**
+	 * Controls the enemies
+	 */
 	EnemyManager em;
+	/**
+	 * Arraylist which contains all enemies
+	 */
 	ArrayList<Enemy> enemies;
+	/**
+	 * The main Character
+	 */
 	Character hero;
-	String filenamestart = "src/resources/start.txt";
+	/**
+	 * Path were the save method writes 
+	 */
+    String filenamesave = "src/resources/save.txt";
 
-	String filenamesave = "/Users/Thore/javasave/save.txt";
-
-	// Writing on Screen
+	/**
+	 * Color of the title
+	 */
 	private Color titlecolor;
+	/**
+	 * Font of the title
+	 */
 	private Font titlefont;
+	/**
+	 * Normal font
+	 */
 	private Font font;
+	/**
+	 * Alternative font
+	 */
 	private Font font2;
 
-	// Target frames per second that the game should run at
+	/**
+	 * Target frames per second that the game should run at
+	 */
 	int fps = 60;
-	// Initial speed of the background
-	int speed = 30;
+	/**
+	 * The speed by which the backgroundspeed is increased by a level up 
+	 */
 	int levelSpeedIncrement = 30;
 
+	/**
+	 * Constructor of the Ocean class
+	 * sets up the ocean for the game
+	 */
 	public Ocean() {
 
 		super();
@@ -67,33 +134,36 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		font2 = new Font("Arial", Font.PLAIN, 20);
 
 		gs = new GameState();
-		em = new EnemyManager(800, 600, speed);
+		//gs.setBackgroundspeed();
+		em = new EnemyManager(800, 600, gs.getBackgroundspeed());
 
 		enemies = new ArrayList<Enemy>();
 		hero = new Character();
 		hero.setPosition(60, 200);
-		bg = new Background(speed);
-		bg2 = new Background(speed);
+		bg = new Background(gs.getBackgroundspeed());
+		bg2 = new Background(gs.getBackgroundspeed());
 
 		em.setTimeToEnemy(500);
 		enemies = em.addEnemy(enemies);
 		gs.setRunning(false);
 
 	}
+	/**
+	 * Loads the Picture for the background
+	 * @param name
+	 * @return img
+	 */
 
 	public Image loadPicture(String name) {
 
 		Image img = new ImageIcon(getClass().getResource(name)).getImage();
 
-		// BufferedImage img = null;
-		// try{
-		// img = ImageIO.read(getClass().getResource(name));
-		// }catch(IOException e){
-		// System.err.println(e.getMessage());
-		// }
-
 		return img;
 	}
+	
+	/**
+	 * Creates the graphic with all its elements
+	 */
 
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -158,7 +228,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 	}
 
-	// Method that is used to start the gameloop thread on startup
+	/**
+	 * Method that is used to start the game loop thread on startup
+	 */
 	public void addNotify() {
 		super.addNotify();
 		gameloop = new Thread(this);
@@ -166,7 +238,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		gameloop.start();
 	}
 
-	// Actions that run before the paint() method in the game loop
+	/**
+	 * Actions that run before the paint method in the game loop
+	 */
 	public void cycle() {
 
 		if (gs.isRunning()) {
@@ -179,8 +253,8 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 			bg.move(fps);
 			bg2.move(fps);
-			bg.setSpeed(speed);
-			bg2.setSpeed(speed);
+			bg.setSpeed(gs.getBackgroundspeed());
+			bg2.setSpeed(gs.getBackgroundspeed());
 			collisionDetection();
 			backgroundloop();
 
@@ -189,8 +263,8 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			if (gs.getTimeRunning() > 6000 * mult & hero.alive()) {
 				gs.levelUp();
 				mult += 1;
-				speed += levelSpeedIncrement;
-				em.setSpeed(speed);
+				gs.setBackgroundspeed(gs.getBackgroundspeed() + levelSpeedIncrement);
+				em.setSpeed(gs.getBackgroundspeed());
 				enemies = em.increaseEnemySpeed(enemies, levelSpeedIncrement);
 
 			}
@@ -200,7 +274,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 
 	}
 
-	// Method that is executed by the gameloop thread
+	/**
+	 * Method that is executed by the game loop thread
+	 */
 	public void run() {
 
 		long beforeTime, deltaTime, sleep;
@@ -228,7 +304,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		}
 	}
 
-	// Makes the background a continuous loop
+	/**
+	 * Makes the background a continuous loop
+	 */
 	private void backgroundloop() {
 
 		if (bg2.getX() <= 0) {
@@ -239,6 +317,10 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		}
 
 	}
+	
+	/**
+	 * Controls whether or not objects in the ocean are colliding and triggers events if they are
+	 */
 
 	public void collisionDetection() {
 
@@ -266,9 +348,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 					enemy.setCollidable(false);
 					if(hero.getLife() == 0){
 						hero.dies();
-						speed = 0;
-						bg.setSpeed(speed);
-						bg2.setSpeed(speed);
+						gs.setBackgroundspeed(0);
 						
 					}
 					if(hero.alive()){
@@ -284,20 +364,24 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		}
 		
 	}
+	/**
+	 * Triggers events according to your current choice in the menu
+	 */
 
 	public void select() {
 		if (currentChoice == 0) {
-			// start
 			
-			speed = 30;
+			
+			
 			gs = new GameState();
-			em = new EnemyManager(800, 600, speed);
+			
+			em = new EnemyManager(800, 600, gs.getBackgroundspeed());
 
 			enemies = new ArrayList<Enemy>();
 			hero = new Character();
 			hero.setPosition(60, 200);
-			bg = new Background(speed);
-			bg2 = new Background(speed);
+			bg = new Background(gs.getBackgroundspeed());
+			bg2 = new Background(gs.getBackgroundspeed());
 			gs.setRunning(true);
 			
 		}
@@ -312,6 +396,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			System.exit(0);
 		}
 	}
+	/**
+	 * Writes all objects which are important for your game in a file
+	 */
 
 	public void save() {
 
@@ -329,9 +416,13 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			e.printStackTrace();
 
 		}
-		// System.out.println(hero.getX());
+		
 
 	}
+	
+	/**
+	 * Loads all objects from the file the save method created
+	 */
 
 	public void load() {
 		try {
@@ -348,14 +439,21 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 			e.printStackTrace();
 
 		}
-		// System.out.println(hero.getX());
+		
 		gs.setRunning(true);
+		
 
 	}
+	/**
+	 * Method needed to implement KeyListener, does nothing
+	 */
 
 	public void keyTyped(KeyEvent key) {
 
 	}
+	/**
+	 * Method which triggers events according to the key's you are pressing
+	 */
 
 	public void keyPressed(KeyEvent key) {
 		k = key.getKeyCode();
@@ -405,6 +503,9 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 		}
 
 	}
+	/**
+	 * Method which triggers events according to the key's you are releasing
+	 */
 
 	public void keyReleased(KeyEvent key) {
 		if (hero.alive() == true) {
