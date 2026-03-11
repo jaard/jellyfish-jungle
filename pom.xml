@@ -29,23 +29,31 @@
                 </configuration>
             </plugin>
 
-            <!-- Generate .icns icon from game sprite -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>generate-icns</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>bash</executable>
-                            <arguments>
-                                <argument>-c</argument>
-                                <argument>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>macos</id>
+            <build>
+                <plugins>
+                    <!-- Generate .icns icon from game sprite -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>generate-icns</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>bash</executable>
+                                    <arguments>
+                                        <argument>-c</argument>
+                                        <argument>
 set -e
 ICON_SRC=src/main/resources/jelly_blue_large.png
 ICONSET=${project.build.directory}/jellyfish.iconset
@@ -62,38 +70,40 @@ sips -z 512 512   "$ICON_SRC" --out "$ICONSET/icon_256x256@2x.png" > /dev/null
 sips -z 512 512   "$ICON_SRC" --out "$ICONSET/icon_512x512.png" > /dev/null
 sips -z 1024 1024 "$ICON_SRC" --out "$ICONSET/icon_512x512@2x.png" > /dev/null
 iconutil -c icns "$ICONSET" -o "$ICNS"
-                                </argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                                        </argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-            <!-- Package as macOS .app / .dmg -->
-            <plugin>
-                <groupId>org.panteleyev</groupId>
-                <artifactId>jpackage-maven-plugin</artifactId>
-                <version>1.7.0</version>
-                <configuration>
-                    <input>${project.build.directory}</input>
-                    <destination>${project.build.directory}/dist</destination>
-                    <mainJar>${project.build.finalName}.jar</mainJar>
-                    <name>Jellyfish Jungle</name>
-                    <appVersion>${project.version}</appVersion>
-                    <icon>${project.build.directory}/jellyfish.icns</icon>
-                    <type>DMG</type>
-                    <macPackageName>Jellyfish Jungle</macPackageName>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>jpackage</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jpackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+                    <!-- Package as macOS .app / .dmg -->
+                    <plugin>
+                        <groupId>org.panteleyev</groupId>
+                        <artifactId>jpackage-maven-plugin</artifactId>
+                        <version>1.7.0</version>
+                        <configuration>
+                            <input>${project.build.directory}</input>
+                            <destination>${project.build.directory}/dist</destination>
+                            <mainJar>${project.build.finalName}.jar</mainJar>
+                            <name>Jellyfish Jungle</name>
+                            <appVersion>${project.version}</appVersion>
+                            <icon>${project.build.directory}/jellyfish.icns</icon>
+                            <type>DMG</type>
+                            <macPackageName>Jellyfish Jungle</macPackageName>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jpackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
