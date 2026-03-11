@@ -1,4 +1,4 @@
-package oceanGame;
+package jellyfishjungle;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -12,18 +12,18 @@ import javax.swing.JFrame;
  * @author Thore
  * 
  */
-public class OceanGame {
+public class JellyfishJungle {
 	/**
 	 * Frame in which the game runs
 	 */
 	JFrame game;
 
 	/**
-	 * Constructor for OceanGame 
+	 * Constructor for JellyfishJungle 
 	 * creates the Frame and the Ocean
 	 */
 
-	public OceanGame() {
+	public JellyfishJungle() {
 
 		game = new JFrame();
 		Ocean ocean = new Ocean();
@@ -50,14 +50,14 @@ public class OceanGame {
 	}
 
 	/**
-	 * Main creates a new OceanGame
+	 * Main creates a new JellyfishJungle
 	 * 
 	 * @param args
 	 */
 
 	public static void main(String[] args) {
 
-		new OceanGame();
+		new JellyfishJungle();
 
 	}
 

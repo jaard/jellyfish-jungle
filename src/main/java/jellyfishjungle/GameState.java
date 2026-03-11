@@ -1,4 +1,4 @@
-package oceanGame;
+package jellyfishjungle;
 
 import java.io.Serializable;
 import java.util.ArrayList;

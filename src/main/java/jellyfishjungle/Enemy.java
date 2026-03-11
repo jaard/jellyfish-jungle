@@ -1,4 +1,4 @@
-package oceanGame;
+package jellyfishjungle;
 
 import java.io.Serializable;
 
@@ -15,9 +15,9 @@ import javax.swing.ImageIcon;
 public class Enemy extends MovingObjects implements Serializable {
 
 	/**
-	 * booleans which define the Enemy: edible, animated and collidable
+	 * booleans which define the Enemy: edible and collidable
 	 */
-	private boolean edible, animated, collidable;
+	private boolean edible, collidable;
 	/**
 	 * Animation Class for the moving Animation of the enemy
 	 */
@@ -36,24 +36,20 @@ public class Enemy extends MovingObjects implements Serializable {
 		this.xVel = xVel;
 
 		if (type == 1) {
-			this.loadPicture("/resources/ghost_left.png");
+			this.loadPicture("/resources/jelly_blue_small.png");
 			width = sprite.getImage().getWidth(null);
 			height = sprite.getImage().getHeight(null);
 			edible = true;
-			animated = true;
 		} else if (type == 2) {
-			this.loadPicture("/resources/ghost_orange.png");
+			this.loadPicture("/resources/jelly_orange_small.png");
 			width = sprite.getImage().getWidth(null);
 			height = sprite.getImage().getHeight(null);
 			edible = false;
-			animated = true;
 		}
 		this.x = x;
 		this.y = y;
 		currentImage = sprite;
-		if (isAnimated()) {
-			loadMoveAnimation(xVel,type);
-		}
+		loadMoveAnimation(xVel, type);
 
 	}
 
@@ -106,12 +102,12 @@ public class Enemy extends MovingObjects implements Serializable {
 
 	/**
 	 * Method to find out if the enemy is animated
-	 * 
-	 * @return animated
+	 *
+	 * @return always true, all enemies are animated
 	 */
 
 	public boolean isAnimated() {
-		return animated;
+		return true;
 	}
 	
 	/**

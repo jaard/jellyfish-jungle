@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>oceanGame</groupId>
+    <groupId>jellyfishjungle</groupId>
     <artifactId>jellyfish-jungle</artifactId>
     <version>1.3.1</version>
     <packaging>jar</packaging>
@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>oceanGame.OceanGame</mainClass>
+                            <mainClass>jellyfishjungle.JellyfishJungle</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

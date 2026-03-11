@@ -1,4 +1,4 @@
-package oceanGame;
+package jellyfishjungle;
 
 import java.awt.Polygon;
 import java.awt.Rectangle;
