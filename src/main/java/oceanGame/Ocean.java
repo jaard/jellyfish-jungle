@@ -89,7 +89,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	/**
 	 * Path were the save method writes 
 	 */
-    String filenamesave = "src/resources/save.txt";
+    String filenamesave = "save.txt";
 
 	/**
 	 * Color of the title
