@@ -87,9 +87,10 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	 */
 	Bubble bubble;
 	/**
-	 * Path were the save method writes 
+	 * Path were the save method writes
 	 */
-    String filenamesave = "save.txt";
+	String filenamesave = System.getProperty("user.home")
+			+ File.separator + ".jellyfishjungle" + File.separator + "save.dat";
 
 	/**
 	 * Color of the title
@@ -397,6 +398,7 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	public void save() {
 
 		try {
+			new File(filenamesave).getParentFile().mkdirs();
 			OutputStream os = new FileOutputStream(filenamesave);
 			ObjectOutputStream oos = new ObjectOutputStream(os);
 			oos.writeObject(hero);
