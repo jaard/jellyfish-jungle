@@ -13,7 +13,7 @@ public class Bubble extends MovingObjects implements Serializable {
 	
 	public Bubble(Character hero){
 		
-		loadPicture("/resources/bubble_small.png");
+		loadPicture("/bubble_small.png");
 		currentImage = sprite;
 		width = sprite.getImage().getWidth(null);
 		height = sprite.getImage().getHeight(null);

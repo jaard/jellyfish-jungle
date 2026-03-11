@@ -42,7 +42,7 @@ public class Character extends MovingObjects implements Serializable {
 	
 	public Character() {
 		
-		loadPicture("/resources/seal_swimming.png");
+		loadPicture("/seal_swimming.png");
 		setPosition(60, 200);
 		width = sprite.getImage().getWidth(null);
 		height = sprite.getImage().getHeight(null);
@@ -60,11 +60,11 @@ public class Character extends MovingObjects implements Serializable {
 		eating = new Animation();
 		eating.addScene(
 				new ImageIcon(getClass().getResource(
-						"/resources/seal_eating.png")), 140);
+						"/seal_eating.png")), 140);
 		eating.addScene(sprite, 1000000000);
 
 		ImageIcon sealRed = new ImageIcon(getClass().getResource(
-				"/resources/seal_red.png"));
+				"/seal_red.png"));
 
 		blinking = new Animation();
 		blinking.addScene(sealRed, 100);
@@ -103,7 +103,7 @@ public class Character extends MovingObjects implements Serializable {
 		} else {
 
 			currentImage = new ImageIcon(getClass().getResource(
-					"/resources/seal_dead.png"));
+					"/seal_dead.png"));
 
 		}
 

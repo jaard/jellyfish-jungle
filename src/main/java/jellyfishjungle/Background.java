@@ -23,7 +23,7 @@ public class Background extends MovingObjects implements  Serializable {
 	public Background(double xVel) {
 		
 		this.xVel = xVel;
-		this.loadPicture("/resources/oceanBackground.png");
+		this.loadPicture("/oceanBackground.png");
 		//width = sprite.getImage().getWidth(null);
 		width = sprite.getImage().getWidth(null);;
 		height = sprite.getImage().getHeight(null);

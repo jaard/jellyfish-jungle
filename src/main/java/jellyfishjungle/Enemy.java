@@ -36,12 +36,12 @@ public class Enemy extends MovingObjects implements Serializable {
 		this.xVel = xVel;
 
 		if (type == 1) {
-			this.loadPicture("/resources/jelly_blue_small.png");
+			this.loadPicture("/jelly_blue_small.png");
 			width = sprite.getImage().getWidth(null);
 			height = sprite.getImage().getHeight(null);
 			edible = true;
 		} else if (type == 2) {
-			this.loadPicture("/resources/jelly_orange_small.png");
+			this.loadPicture("/jelly_orange_small.png");
 			width = sprite.getImage().getWidth(null);
 			height = sprite.getImage().getHeight(null);
 			edible = false;
@@ -67,13 +67,13 @@ public class Enemy extends MovingObjects implements Serializable {
 			moveAnimation = new Animation();
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
-							"/resources/jelly_blue_small.png")), duration0);
+							"/jelly_blue_small.png")), duration0);
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
-							"/resources/jelly_blue_large.png")), duration1);
+							"/jelly_blue_large.png")), duration1);
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
-							"/resources/jelly_blue_small.png")), duration1);
+							"/jelly_blue_small.png")), duration1);
 		}else if(type == 2){
 			long duration0 = (long) (Math.random()*500);
 			long duration1 = (long) Math.round(1.2*100000/xVel);
@@ -81,13 +81,13 @@ public class Enemy extends MovingObjects implements Serializable {
 			moveAnimation = new Animation();
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
-							"/resources/jelly_orange_small.png")), duration0);
+							"/jelly_orange_small.png")), duration0);
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
-							"/resources/jelly_orange_large.png")), duration1);
+							"/jelly_orange_large.png")), duration1);
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
-							"/resources/jelly_orange_small.png")), duration1);
+							"/jelly_orange_small.png")), duration1);
 		}
 	}
 
