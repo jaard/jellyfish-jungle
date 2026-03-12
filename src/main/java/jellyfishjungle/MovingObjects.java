@@ -3,7 +3,6 @@ package jellyfishjungle;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 
 /**

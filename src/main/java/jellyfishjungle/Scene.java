@@ -1,9 +1,8 @@
 package jellyfishjungle;
 
-import java.awt.Image;
 import java.io.Serializable;
-
 import javax.swing.ImageIcon;
+
 /**
  * Class that stores an image together with the time
  * in the Animation at which it stops playing

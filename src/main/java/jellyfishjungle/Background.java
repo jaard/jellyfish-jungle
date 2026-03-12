@@ -1,9 +1,6 @@
 package jellyfishjungle;
 
-import java.awt.Image;
 import java.io.Serializable;
-
-import javax.swing.ImageIcon;
 
 /**
  * Class that creates the ocean background
@@ -12,7 +9,7 @@ import javax.swing.ImageIcon;
  *
  */
 
-public class Background extends MovingObjects implements  Serializable {
+public class Background extends MovingObjects implements Serializable {
 
 	/**
 	 * Constructor for the background

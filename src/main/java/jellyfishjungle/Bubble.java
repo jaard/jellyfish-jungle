@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 public class Bubble extends MovingObjects implements Serializable {
 	
-	
 	boolean active;
 	private long timeActive = 0;
 	private long maxTime = 5000;

@@ -1,7 +1,6 @@
 package jellyfishjungle;
 
 import java.io.Serializable;
-
 import javax.swing.ImageIcon;
 
 /**
