@@ -1,5 +1,7 @@
 # Jellyfish Jungle
 
+<img width="800" alt="Image" src="https://github.com/user-attachments/assets/857ddf74-d024-40d2-9d4a-f7e8d787fd3b" />
+
 A simple sidescroller game where you take charge of a cute seal's nutritional needs:
 Eat the blue jellyfish, avoid the red ones!
 
