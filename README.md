@@ -1,6 +1,9 @@
 # Jellyfish Jungle
 
-A Java game built with Maven.
+A simple sidescroller game where you take charge of a cute seal's nutritional needs:
+Eat the blue jellyfish, avoid the red ones!
+
+I built this many years ago as a deliverable for a Java programming course.
 
 ## Build
 
