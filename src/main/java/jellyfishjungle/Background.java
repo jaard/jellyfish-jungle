@@ -1,7 +1,5 @@
 package jellyfishjungle;
 
-import java.io.Serializable;
-
 /**
  * Class that creates the ocean background
  * extends Class MovingObjects implements Interface Serializable
@@ -9,7 +7,7 @@ import java.io.Serializable;
  *
  */
 
-public class Background extends MovingObjects implements Serializable {
+public class Background extends MovingObjects {
 
 	/**
 	 * Constructor for the background

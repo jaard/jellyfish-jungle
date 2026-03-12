@@ -2,7 +2,6 @@ package jellyfishjungle;
 
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
@@ -11,7 +10,7 @@ import javax.swing.ImageIcon;
  * @author Jaard, Thore
  *
  */
-public class Character extends MovingObjects implements Serializable {
+public class Character extends MovingObjects {
 
 	/**
 	 * Booleans which controls if the Character is existing, eating, blinking

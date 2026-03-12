@@ -1,6 +1,5 @@
 package jellyfishjungle;
 
-import java.io.Serializable;
 import javax.swing.ImageIcon;
 
 /**
@@ -11,7 +10,7 @@ import javax.swing.ImageIcon;
  * 
  */
 
-public class Enemy extends MovingObjects implements Serializable {
+public class Enemy extends MovingObjects {
 
 	/**
 	 * booleans which define the Enemy: edible and collidable
@@ -62,7 +61,6 @@ public class Enemy extends MovingObjects implements Serializable {
 		if(type == 1){
 			long duration0 = (long) (Math.random()*500);
 			long duration1 = (long) Math.round(1.2*100000/xVel);
-			long duration2 = (long) Math.round(5*100000/xVel);
 			moveAnimation = new Animation();
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(
@@ -76,7 +74,6 @@ public class Enemy extends MovingObjects implements Serializable {
 		}else if(type == 2){
 			long duration0 = (long) (Math.random()*500);
 			long duration1 = (long) Math.round(1.2*100000/xVel);
-			long duration2 = (long) Math.round(5*100000/xVel);
 			moveAnimation = new Animation();
 			moveAnimation.addScene(
 					new ImageIcon(getClass().getResource(

@@ -2,9 +2,8 @@ package jellyfishjungle;
 
 import java.awt.Polygon;
 import java.awt.Rectangle;
-import java.io.Serializable;
 
-public class Bubble extends MovingObjects implements Serializable {
+public class Bubble extends MovingObjects {
 	
 	boolean active;
 	private long timeActive = 0;
