@@ -5,7 +5,10 @@
 A simple sidescroller game where you take charge of a cute seal's nutritional needs:
 Eat the blue jellyfish, avoid the red ones!
 
-I built this many years ago as a deliverable for a Java programming course.
+I originally built this in 2013 together with a friend as a deliverable for a Java programming course.
+In March 2025 I finally managed to find the complete source code on an old disk - so I did some cleanup, fixed a few bugs and ported the project to Maven.
+
+Some more bugfixes and features may follow.
 
 ## Build
 
