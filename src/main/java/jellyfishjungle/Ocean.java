@@ -417,8 +417,12 @@ public class Ocean extends JPanel implements Runnable, KeyListener {
 	
 	/**
 	 * Loads all objects from the file the save method created
+	 * 
+	 * @SuppressWarnings("unchecked") is needed to load the ArrayList of Enemies without an error
+	 * It is ok because we control the file and know that it only contains the objects we want.
 	 */
 
+	@SuppressWarnings("unchecked")
 	public void load() {
 		try {
 			InputStream is = new FileInputStream(filenamesave);
